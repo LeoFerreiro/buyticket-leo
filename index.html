@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NocheViva | Entradas para shows en vivo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Inicio NocheViva">
+          <span class="brand-mark">NV</span>
+          <span>NocheViva</span>
+        </a>
+        <nav class="main-nav" aria-label="Secciones principales">
+          <a href="#eventos">Eventos</a>
+          <a href="#cola">Cola virtual</a>
+          <a href="#checkout">Checkout demo</a>
+        </nav>
+        <div class="topbar-actions">
+          <button class="icon-button" id="reset-demo" type="button" aria-label="Reiniciar demo" title="Reiniciar demo">
+            ↻
+          </button>
+          <button class="cart-chip" id="cart-jump" type="button">
+            <span>Carrito</span>
+            <strong id="cart-count">0</strong>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow">Ticketera demo · rock nacional · estado efímero</p>
+            <h1 id="hero-title">Entradas para la noche que se acuerda al otro dia</h1>
+            <p class="hero-text">
+              Elegi un show, entra a la cola virtual, selecciona sectores y completa un checkout simulado.
+              Todo funciona en memoria: al cerrar o recargar, la demo vuelve a empezar.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" id="start-featured" type="button">Entrar a la cola</button>
+              <button class="secondary-button" id="explore-events" type="button">Ver fechas</button>
+            </div>
+          </div>
+
+          <article class="featured-show" id="featured-card" aria-label="Show destacado">
+            <div class="poster">
+              <span class="poster-kicker">Fecha destacada</span>
+              <strong id="featured-band">Los Piojos</strong>
+              <span id="featured-venue">Estadio Unico de La Plata</span>
+            </div>
+            <div class="featured-info">
+              <span class="live-badge">Venta fuerte</span>
+              <h2 id="featured-title">Los Piojos · Ritual de verano</h2>
+              <p id="featured-meta">Sab 18 Jul · 21:00 · La Plata</p>
+              <div class="mini-stats">
+                <span><strong id="featured-price">$42.000</strong> desde</span>
+                <span><strong id="featured-stock">23%</strong> disponible</span>
+                <span><strong id="featured-demand">Alta</strong> demanda</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="workflow" id="checkout" aria-label="Flujo de compra">
+          <div class="step active" data-step="1">
+            <span>1</span>
+            <p>Elegir show</p>
+          </div>
+          <div class="step" data-step="2">
+            <span>2</span>
+            <p>Cola virtual</p>
+          </div>
+          <div class="step" data-step="3">
+            <span>3</span>
+            <p>Entradas</p>
+          </div>
+          <div class="step" data-step="4">
+            <span>4</span>
+            <p>Pago demo</p>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <aside class="filters" aria-label="Filtros de eventos">
+            <div class="section-heading">
+              <p class="eyebrow">Explorar</p>
+              <h2>Cartelera</h2>
+            </div>
+            <label class="field">
+              <span>Buscar artista</span>
+              <input id="search-input" type="search" placeholder="Kapanga, Divididos..." />
+            </label>
+            <div class="filter-group" aria-label="Categorias">
+              <button class="filter-pill active" type="button" data-filter="todos">Todos</button>
+              <button class="filter-pill" type="button" data-filter="rock">Rock</button>
+              <button class="filter-pill" type="button" data-filter="festival">Festival</button>
+              <button class="filter-pill" type="button" data-filter="teatro">Teatro</button>
+            </div>
+            <div class="notice">
+              <strong>Demo sin guardado</strong>
+              <p>La cola, carrito y compra viven solo mientras esta pagina esta abierta.</p>
+            </div>
+          </aside>
+
+          <section class="events-panel" id="eventos" aria-labelledby="events-title">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Proximas fechas</p>
+                <h2 id="events-title">Rock nacional y shows en vivo</h2>
+              </div>
+              <span id="results-count">0 eventos</span>
+            </div>
+            <div class="event-list" id="event-list"></div>
+          </section>
+
+          <aside class="purchase-panel" aria-label="Compra seleccionada">
+            <section class="queue-box" id="cola">
+              <div class="panel-header compact">
+                <div>
+                  <p class="eyebrow">Sala de espera</p>
+                  <h2>Cola virtual</h2>
+                </div>
+                <span class="status-dot" id="queue-status">Lista</span>
+              </div>
+              <div class="queue-meter" aria-label="Progreso de cola">
+                <div id="queue-progress"></div>
+              </div>
+              <div class="queue-stats">
+                <span><strong id="queue-position">--</strong> posicion</span>
+                <span><strong id="queue-time">--</strong> espera</span>
+              </div>
+              <p class="queue-copy" id="queue-copy">
+                Elegi un evento y entra a la cola para habilitar la seleccion de entradas.
+              </p>
+              <button class="primary-button full" id="queue-button" type="button">Entrar a la cola</button>
+            </section>
+
+            <section class="ticket-box">
+              <div class="panel-header compact">
+                <div>
+                  <p class="eyebrow">Seleccion</p>
+                  <h2 id="selected-name">Elegir entradas</h2>
+                </div>
+              </div>
+              <div class="ticket-types" id="ticket-types"></div>
+            </section>
+
+            <section class="cart-box" id="cart-panel">
+              <div class="panel-header compact">
+                <div>
+                  <p class="eyebrow">Resumen</p>
+                  <h2>Carrito</h2>
+                </div>
+                <button class="link-button" id="clear-cart" type="button">Vaciar</button>
+              </div>
+              <div id="cart-items" class="cart-items"></div>
+              <div class="cart-total">
+                <span>Total</span>
+                <strong id="cart-total">$0</strong>
+              </div>
+              <button class="checkout-button" id="checkout-button" type="button" disabled>Finalizar compra demo</button>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="checkout-modal" id="checkout-modal">
+      <form method="dialog">
+        <button class="modal-close" value="cancel" aria-label="Cerrar">×</button>
+        <p class="eyebrow">Checkout demo</p>
+        <h2>Compra simulada lista</h2>
+        <p>
+          No se proceso ningun pago ni se guardo informacion. Esta confirmacion existe solo en memoria para mostrar
+          el flujo completo de la ticketera.
+        </p>
+        <div class="fake-ticket" id="fake-ticket"></div>
+        <button class="primary-button full" id="finish-demo" value="default" type="submit">Cerrar y reiniciar carrito</button>
+      </form>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
+</html>
