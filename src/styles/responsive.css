@@ -1,5 +1,6 @@
 @media (max-width: 1120px) {
   .hero,
+  .account-panel,
   .content-grid {
     grid-template-columns: 1fr;
   }
@@ -15,6 +16,11 @@
     flex-direction: column;
   }
 
+  .topbar-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
   .main-nav {
     width: 100%;
     overflow-x: auto;
@@ -23,6 +29,21 @@
 
   .workflow {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .account-card,
+  .owned-ticket {
+    grid-template-columns: 1fr;
+  }
+
+  .account-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-actions {
+    width: 100%;
+    justify-items: stretch;
   }
 
   .event-row {

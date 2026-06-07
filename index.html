@@ -22,9 +22,13 @@
         <nav class="main-nav" aria-label="Secciones principales">
           <a href="#eventos">Eventos</a>
           <a href="#cola">Cola virtual</a>
+          <a href="#mis-tickets">Mis tickets</a>
           <a href="#checkout">Checkout demo</a>
         </nav>
         <div class="topbar-actions">
+          <button class="session-chip" id="auth-open" type="button">
+            <span id="session-label">Registrarse</span>
+          </button>
           <button class="icon-button" id="reset-demo" type="button" aria-label="Reiniciar demo" title="Reiniciar demo">
             R
           </button>
@@ -85,6 +89,25 @@
           <div class="step" data-step="4">
             <span>4</span>
             <p>Pago demo</p>
+          </div>
+        </section>
+
+        <section class="account-panel" id="mis-tickets" aria-labelledby="account-title">
+          <div class="account-card">
+            <div>
+              <p class="eyebrow">Cuenta demo</p>
+              <h2 id="account-title">Registro y tickets</h2>
+              <p id="account-copy">
+                Registrate para completar el checkout y ver tus entradas emitidas durante esta sesion.
+              </p>
+            </div>
+            <div class="account-actions">
+              <button class="secondary-dark-button" id="account-action" type="button">Crear usuario demo</button>
+              <button class="link-button hidden" id="logout-button" type="button">Salir</button>
+            </div>
+          </div>
+          <div class="my-tickets" id="my-tickets">
+            <p class="empty-state">Todavia no tenes tickets comprados en esta sesion.</p>
           </div>
         </section>
 
@@ -184,6 +207,26 @@
         </p>
         <div class="fake-ticket" id="fake-ticket"></div>
         <button class="primary-button full" id="finish-demo" value="default" type="submit">Cerrar y reiniciar carrito</button>
+      </form>
+    </dialog>
+
+    <dialog class="checkout-modal" id="auth-modal">
+      <form id="auth-form" method="dialog">
+        <button class="modal-close" value="cancel" aria-label="Cerrar">x</button>
+        <p class="eyebrow">Registro demo</p>
+        <h2>Crear usuario de prueba</h2>
+        <p>
+          Estos datos viven solo en memoria. No se guardan, no se envian a ningun servidor y desaparecen al cerrar la web.
+        </p>
+        <label class="field">
+          <span>Nombre</span>
+          <input id="auth-name" name="name" type="text" placeholder="Ej: Leo" required />
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input id="auth-email" name="email" type="email" placeholder="leo@nocheviva.demo" required />
+        </label>
+        <button class="primary-button full" type="submit">Entrar a mi cuenta demo</button>
       </form>
     </dialog>
 

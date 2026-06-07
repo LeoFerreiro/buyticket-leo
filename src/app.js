@@ -75,14 +75,39 @@ function checkout() {
   const lines = getCartLines();
   if (!lines.length) return;
 
+  if (!state.user) {
+    openAuthModal();
+    return;
+  }
+
   const total = lines.reduce((sum, line) => sum + line.price * line.quantity, 0);
+  const issuedTickets = issuePurchasedTickets(lines);
+  state.purchasedTickets = [...issuedTickets, ...state.purchasedTickets];
+  state.cart = {};
+  renderAll();
   setActiveStep(4);
   el.fakeTicket.innerHTML = `
     <strong>NocheViva #${randomBetween(1000, 9999)}</strong>
-    <span>${lines.map((line) => `${line.quantity} x ${line.artist}`).join(" / ")}</span>
+    <span>${issuedTickets.map((ticket) => `${ticket.quantity} x ${ticket.artist}`).join(" / ")}</span>
     <p>Total demo: ${formatMoney.format(total)}</p>
+    <p>Quedaron disponibles en Mis tickets para ${state.user.name}.</p>
   `;
   el.checkoutModal.showModal();
+}
+
+function issuePurchasedTickets(lines) {
+  return lines.map((line) => {
+    const event = events.find((item) => item.id === line.eventId);
+    return {
+      code: `NV-${randomBetween(10000, 99999)}`,
+      artist: line.artist,
+      name: line.name,
+      quantity: line.quantity,
+      venue: event.venue,
+      date: event.date,
+      time: event.time,
+    };
+  });
 }
 
 function clearCart() {
@@ -93,6 +118,8 @@ function clearCart() {
 function resetDemo() {
   resetQueueOnly();
   state.cart = {};
+  state.user = null;
+  state.purchasedTickets = [];
   state.filter = "todos";
   state.search = "";
   state.selectedEventId = events[0].id;
@@ -100,6 +127,31 @@ function resetDemo() {
   el.filterPills.forEach((pill) => pill.classList.toggle("active", pill.dataset.filter === "todos"));
   renderAll();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function openAuthModal() {
+  el.authModal.showModal();
+  window.setTimeout(() => el.authName.focus(), 0);
+}
+
+function registerUser(event) {
+  event.preventDefault();
+  const name = el.authName.value.trim();
+  const email = el.authEmail.value.trim();
+
+  if (!name || !email) return;
+
+  state.user = { name, email };
+  el.authForm.reset();
+  el.authModal.close();
+  renderAll();
+  document.querySelector("#mis-tickets").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function logoutUser() {
+  state.user = null;
+  state.purchasedTickets = [];
+  renderAll();
 }
 
 function bindEvents() {
@@ -133,6 +185,16 @@ function bindEvents() {
   });
   el.exploreEvents.addEventListener("click", () => document.querySelector("#eventos").scrollIntoView({ behavior: "smooth" }));
   el.cartJump.addEventListener("click", () => document.querySelector("#cart-panel").scrollIntoView({ behavior: "smooth" }));
+  el.authOpen.addEventListener("click", openAuthModal);
+  el.accountAction.addEventListener("click", () => {
+    if (state.user) {
+      document.querySelector("#mis-tickets").scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    openAuthModal();
+  });
+  el.authForm.addEventListener("submit", registerUser);
+  el.logoutButton.addEventListener("click", logoutUser);
   el.checkoutButton.addEventListener("click", checkout);
   el.clearCart.addEventListener("click", clearCart);
   el.resetDemo.addEventListener("click", resetDemo);

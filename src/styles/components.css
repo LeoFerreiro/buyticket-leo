@@ -42,7 +42,9 @@
 
 .icon-button,
 .cart-chip,
+.session-chip,
 .primary-button,
+.secondary-dark-button,
 .secondary-button,
 .checkout-button {
   border: 0;
@@ -77,6 +79,16 @@
   color: #fff;
   border-radius: 999px;
   font-size: 12px;
+}
+
+.session-chip {
+  padding: 0 14px;
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.session-chip.logged {
+  background: var(--cyan);
 }
 
 h1 {
@@ -117,6 +129,12 @@ h1 {
   color: var(--paper);
   padding: 0 18px;
   border: 1px solid var(--line);
+}
+
+.secondary-dark-button {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0 16px;
 }
 
 .featured-show {
@@ -271,6 +289,104 @@ h1 {
 .step.active {
   background: var(--paper);
   color: var(--ink);
+}
+
+.account-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1.12fr);
+  gap: 18px;
+  margin: 0 0 24px;
+}
+
+.account-card,
+.my-tickets {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--dark-line);
+}
+
+.account-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px;
+}
+
+.account-card p:not(.eyebrow) {
+  margin: 8px 0 0;
+  color: #655c52;
+  line-height: 1.45;
+}
+
+.account-actions {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+  min-width: 180px;
+}
+
+.my-tickets {
+  display: grid;
+  gap: 10px;
+  min-height: 118px;
+  padding: 16px;
+}
+
+.empty-state {
+  margin: 0;
+  align-self: center;
+  color: #655c52;
+  font-weight: 700;
+}
+
+.owned-ticket {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  border-left: 8px solid var(--red);
+}
+
+.owned-ticket strong {
+  display: block;
+  margin: 5px 0;
+  font-family: Archivo, Inter, sans-serif;
+  font-size: 22px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.owned-ticket p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ticket-code,
+.ticket-qty {
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.ticket-code {
+  padding: 5px 8px;
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.ticket-qty {
+  padding: 7px 10px;
+  background: var(--yellow);
+  color: var(--ink);
+  white-space: nowrap;
 }
 
 .filters,
@@ -583,6 +699,10 @@ h1 {
   background: transparent;
   color: #b3261e;
   font-weight: 900;
+}
+
+.hidden {
+  display: none;
 }
 
 .cart-items {

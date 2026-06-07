@@ -1,4 +1,11 @@
-import { state, getCartLines, getSelectedEvent, getVisibleEvents, ticketKey } from "../state/store.js";
+import {
+  state,
+  getCartLines,
+  getPurchasedTickets,
+  getSelectedEvent,
+  getVisibleEvents,
+  ticketKey,
+} from "../state/store.js";
 import { formatMoney } from "../utils/formatters.js";
 import { el } from "./dom.js";
 
@@ -8,6 +15,7 @@ export function renderAll() {
   renderQueue();
   renderTickets();
   renderCart();
+  renderAccount();
 }
 
 export function renderEvents() {
@@ -143,4 +151,34 @@ export function setActiveStep(stepNumber) {
   el.steps.forEach((step) => {
     step.classList.toggle("active", Number(step.dataset.step) === stepNumber);
   });
+}
+
+function renderAccount() {
+  const tickets = getPurchasedTickets();
+  const userLabel = state.user ? state.user.name : "Registrarse";
+
+  el.sessionLabel.textContent = userLabel;
+  el.authOpen.classList.toggle("logged", Boolean(state.user));
+  el.logoutButton.classList.toggle("hidden", !state.user);
+  el.accountAction.textContent = state.user ? "Ver mis tickets" : "Crear usuario demo";
+  el.accountCopy.textContent = state.user
+    ? `${state.user.name}, tus tickets emitidos aparecen aca hasta que cierres o reinicies la demo.`
+    : "Registrate para completar el checkout y ver tus entradas emitidas durante esta sesion.";
+
+  el.myTickets.innerHTML = tickets.length
+    ? tickets.map(createPurchasedTicket).join("")
+    : '<p class="empty-state">Todavia no tenes tickets comprados en esta sesion.</p>';
+}
+
+function createPurchasedTicket(ticket) {
+  return `
+    <article class="owned-ticket">
+      <div>
+        <span class="ticket-code">${ticket.code}</span>
+        <strong>${ticket.artist}</strong>
+        <p>${ticket.name} / ${ticket.venue} / ${ticket.date} / ${ticket.time}</p>
+      </div>
+      <span class="ticket-qty">${ticket.quantity} entrada${ticket.quantity > 1 ? "s" : ""}</span>
+    </article>
+  `;
 }

@@ -15,6 +15,8 @@ export const state = {
   selectedEventId: events[0].id,
   queue: { ...initialQueue },
   cart: {},
+  user: null,
+  purchasedTickets: [],
 };
 
 export function getSelectedEvent() {
@@ -31,6 +33,10 @@ export function getVisibleEvents() {
 
 export function getCartLines() {
   return Object.values(state.cart);
+}
+
+export function getPurchasedTickets() {
+  return state.purchasedTickets;
 }
 
 export function ticketKey(eventId, ticketId) {
