@@ -1,0 +1,65 @@
+:root {
+  --ink: #161615;
+  --coal: #24211f;
+  --paper: #fff8e8;
+  --line: rgba(255, 248, 232, 0.18);
+  --dark-line: rgba(22, 22, 21, 0.14);
+  --red: #f44738;
+  --lime: #c7f464;
+  --cyan: #47d7ce;
+  --yellow: #ffd166;
+  --muted: #bdb4a1;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--coal);
+  color: var(--paper);
+  font-family: Inter, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+.poster strong {
+  font-family: Archivo, Inter, sans-serif;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--lime);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.full {
+  width: 100%;
+}

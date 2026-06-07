@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="app-shell">
@@ -26,7 +26,7 @@
         </nav>
         <div class="topbar-actions">
           <button class="icon-button" id="reset-demo" type="button" aria-label="Reiniciar demo" title="Reiniciar demo">
-            ↻
+            R
           </button>
           <button class="cart-chip" id="cart-jump" type="button">
             <span>Carrito</span>
@@ -38,7 +38,7 @@
       <main>
         <section class="hero" aria-labelledby="hero-title">
           <div class="hero-copy">
-            <p class="eyebrow">Ticketera demo · rock nacional · estado efímero</p>
+            <p class="eyebrow">Ticketera demo / rock nacional / estado efimero</p>
             <h1 id="hero-title">Entradas para la noche que se acuerda al otro dia</h1>
             <p class="hero-text">
               Elegi un show, entra a la cola virtual, selecciona sectores y completa un checkout simulado.
@@ -58,8 +58,8 @@
             </div>
             <div class="featured-info">
               <span class="live-badge">Venta fuerte</span>
-              <h2 id="featured-title">Los Piojos · Ritual de verano</h2>
-              <p id="featured-meta">Sab 18 Jul · 21:00 · La Plata</p>
+              <h2 id="featured-title">Los Piojos / Ritual de verano</h2>
+              <p id="featured-meta">Sab 18 Jul / 21:00 / La Plata</p>
               <div class="mini-stats">
                 <span><strong id="featured-price">$42.000</strong> desde</span>
                 <span><strong id="featured-stock">23%</strong> disponible</span>
@@ -175,7 +175,7 @@
 
     <dialog class="checkout-modal" id="checkout-modal">
       <form method="dialog">
-        <button class="modal-close" value="cancel" aria-label="Cerrar">×</button>
+        <button class="modal-close" value="cancel" aria-label="Cerrar">x</button>
         <p class="eyebrow">Checkout demo</p>
         <h2>Compra simulada lista</h2>
         <p>
@@ -187,6 +187,6 @@
       </form>
     </dialog>
 
-    <script src="script.js"></script>
+    <script type="module" src="./src/app.js"></script>
   </body>
 </html>

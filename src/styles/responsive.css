@@ -1,0 +1,40 @@
+@media (max-width: 1120px) {
+  .hero,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .main-nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .workflow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .event-row {
+    grid-template-columns: 70px minmax(0, 1fr);
+  }
+
+  .select-event {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .poster {
+    min-height: 240px;
+  }
+}
