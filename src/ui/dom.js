@@ -33,6 +33,8 @@ export const el = {
   authForm: document.querySelector("#auth-form"),
   authName: document.querySelector("#auth-name"),
   authEmail: document.querySelector("#auth-email"),
+  authPassword: document.querySelector("#auth-password"),
+  authError: document.querySelector("#auth-error"),
   sessionLabel: document.querySelector("#session-label"),
   accountCopy: document.querySelector("#account-copy"),
   accountAction: document.querySelector("#account-action"),
@@ -41,4 +43,6 @@ export const el = {
   startFeatured: document.querySelector("#start-featured"),
   exploreEvents: document.querySelector("#explore-events"),
   steps: document.querySelectorAll(".step"),
+  pageViews: document.querySelectorAll(".page-view"),
+  routeLinks: document.querySelectorAll("[data-route]"),
 };

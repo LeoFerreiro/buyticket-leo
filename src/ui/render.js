@@ -162,7 +162,7 @@ function renderAccount() {
   el.logoutButton.classList.toggle("hidden", !state.user);
   el.accountAction.textContent = state.user ? "Ver mis tickets" : "Crear usuario demo";
   el.accountCopy.textContent = state.user
-    ? `${state.user.name}, tus tickets emitidos aparecen aca hasta que cierres o reinicies la demo.`
+    ? `${state.user.name}, tus tickets emitidos aparecen aca hasta que cierres, recargues o reinicies la demo.`
     : "Registrate para completar el checkout y ver tus entradas emitidas durante esta sesion.";
 
   el.myTickets.innerHTML = tickets.length

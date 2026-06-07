@@ -92,6 +92,7 @@ function checkout() {
     <p>Total demo: ${formatMoney.format(total)}</p>
     <p>Quedaron disponibles en Mis tickets para ${state.user.name}.</p>
   `;
+  showPage("tickets");
   el.checkoutModal.showModal();
 }
 
@@ -126,10 +127,12 @@ function resetDemo() {
   el.searchInput.value = "";
   el.filterPills.forEach((pill) => pill.classList.toggle("active", pill.dataset.filter === "todos"));
   renderAll();
+  showPage("home");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function openAuthModal() {
+  clearAuthError();
   el.authModal.showModal();
   window.setTimeout(() => el.authName.focus(), 0);
 }
@@ -138,20 +141,81 @@ function registerUser(event) {
   event.preventDefault();
   const name = el.authName.value.trim();
   const email = el.authEmail.value.trim();
+  const password = el.authPassword.value;
+  const validationError = validateCredentials({ name, email, password });
 
-  if (!name || !email) return;
+  if (validationError) {
+    showAuthError(validationError.message, validationError.field);
+    return;
+  }
 
   state.user = { name, email };
   el.authForm.reset();
+  clearAuthError();
   el.authModal.close();
   renderAll();
-  document.querySelector("#mis-tickets").scrollIntoView({ behavior: "smooth", block: "start" });
+  showPage("tickets");
 }
 
 function logoutUser() {
   state.user = null;
   state.purchasedTickets = [];
   renderAll();
+}
+
+function validateCredentials({ name, email, password }) {
+  if (!name) return { field: el.authName, message: "Ingresa un nombre para crear el usuario demo." };
+  if (!isValidEmail(email)) return { field: el.authEmail, message: "Ingresa un email valido. Ejemplo: leo@nocheviva.demo" };
+  if (password.length < 8 || password.length > 15) {
+    return { field: el.authPassword, message: "La contraseña debe tener entre 8 y 15 caracteres." };
+  }
+  if (countPasswordTypes(password) < 3) {
+    return {
+      field: el.authPassword,
+      message: "La contraseña debe combinar al menos 3 tipos: minusculas, mayusculas, numeros o simbolos.",
+    };
+  }
+  return null;
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function countPasswordTypes(password) {
+  const checks = [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/];
+  return checks.filter((regex) => regex.test(password)).length;
+}
+
+function showAuthError(message, field) {
+  clearAuthError();
+  el.authError.textContent = message;
+  field.setAttribute("aria-invalid", "true");
+  field.focus();
+}
+
+function clearAuthError() {
+  el.authError.textContent = "";
+  el.authName.removeAttribute("aria-invalid");
+  el.authEmail.removeAttribute("aria-invalid");
+  el.authPassword.removeAttribute("aria-invalid");
+}
+
+function showPage(pageName) {
+  el.pageViews.forEach((page) => {
+    page.classList.toggle("active", page.dataset.page === pageName);
+  });
+  el.routeLinks.forEach((link) => {
+    link.classList.toggle("active", link.dataset.route === pageName);
+  });
+  window.location.hash = pageName === "tickets" ? "mis-tickets" : "";
+}
+
+function showHomeAndScroll(targetSelector) {
+  showPage("home");
+  window.setTimeout(() => {
+    document.querySelector(targetSelector).scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 0);
 }
 
 function bindEvents() {
@@ -180,19 +244,34 @@ function bindEvents() {
 
   el.queueButton.addEventListener("click", startQueue);
   el.startFeatured.addEventListener("click", () => {
-    document.querySelector("#cola").scrollIntoView({ behavior: "smooth", block: "start" });
+    showHomeAndScroll("#cola");
     startQueue();
   });
-  el.exploreEvents.addEventListener("click", () => document.querySelector("#eventos").scrollIntoView({ behavior: "smooth" }));
-  el.cartJump.addEventListener("click", () => document.querySelector("#cart-panel").scrollIntoView({ behavior: "smooth" }));
+  el.exploreEvents.addEventListener("click", () => showHomeAndScroll("#eventos"));
+  el.cartJump.addEventListener("click", () => showHomeAndScroll("#cart-panel"));
   el.authOpen.addEventListener("click", openAuthModal);
   el.accountAction.addEventListener("click", () => {
     if (state.user) {
-      document.querySelector("#mis-tickets").scrollIntoView({ behavior: "smooth", block: "start" });
+      showPage("tickets");
       return;
     }
     openAuthModal();
   });
+  el.routeLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const route = link.dataset.route;
+      if (route === "tickets") {
+        event.preventDefault();
+        showPage("tickets");
+        return;
+      }
+      event.preventDefault();
+      showHomeAndScroll(link.getAttribute("href"));
+    });
+  });
+  el.authEmail.addEventListener("input", clearAuthError);
+  el.authName.addEventListener("input", clearAuthError);
+  el.authPassword.addEventListener("input", clearAuthError);
   el.authForm.addEventListener("submit", registerUser);
   el.logoutButton.addEventListener("click", logoutUser);
   el.checkoutButton.addEventListener("click", checkout);
@@ -202,4 +281,7 @@ function bindEvents() {
 }
 
 bindEvents();
+if (window.location.hash === "#mis-tickets") {
+  showPage("tickets");
+}
 renderAll();

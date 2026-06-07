@@ -1,11 +1,12 @@
 @media (max-width: 1120px) {
   .hero,
-  .account-panel,
+  .tickets-page,
   .content-grid {
     grid-template-columns: 1fr;
   }
 
-  .filters {
+  .filters,
+  .tickets-hero {
     position: static;
   }
 }
@@ -31,14 +32,8 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .account-card,
   .owned-ticket {
     grid-template-columns: 1fr;
-  }
-
-  .account-card {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .account-actions {
