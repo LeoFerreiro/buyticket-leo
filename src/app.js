@@ -253,16 +253,14 @@ function showProfilePanel() {
 function openRegretModal() {
   const hasTickets = state.purchasedTickets.length > 0;
   el.regretCopy.textContent = hasTickets
-    ? "Esta accion simula la anulacion de los tickets comprados durante esta sesion. No se envia informacion a ningun servidor."
-    : "Todavia no hay tickets comprados en esta sesion para anular.";
+    ? "En esta demo podes iniciar una solicitud de devolucion para las entradas compradas durante la sesion actual. La devolucion no se aprueba de forma automatica: quedaria sujeta a evaluacion segun los terminos y condiciones del servicio. No se envia informacion a ningun servidor."
+    : "Todavia no hay tickets comprados en esta sesion. Cuando exista una compra demo, desde aca se podria iniciar una solicitud de devolucion sujeta a evaluacion segun los terminos y condiciones.";
   el.confirmRegret.disabled = !hasTickets;
   el.regretModal.showModal();
 }
 
 function confirmRegret() {
-  state.purchasedTickets = [];
-  renderAll();
-  el.regretCopy.textContent = "Listo: los tickets de esta sesion fueron anulados en la demo.";
+  el.regretCopy.textContent = "Solicitud registrada en la demo. En un sistema real, el pedido pasaria a evaluacion segun los terminos y condiciones antes de confirmar cualquier devolucion.";
   el.confirmRegret.disabled = true;
 }
 

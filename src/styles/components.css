@@ -801,39 +801,24 @@ h1 {
 
 .regret-panel {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
+  justify-content: center;
   margin-top: 24px;
-  padding: 20px;
-  background: var(--paper);
-  color: var(--ink);
-  border: 1px solid var(--dark-line);
-}
-
-.regret-panel h2 {
-  margin-bottom: 8px;
-}
-
-.regret-panel p:not(.eyebrow) {
-  margin: 0;
-  color: #655c52;
-  line-height: 1.45;
+  padding: 10px 0 2px;
 }
 
 .regret-button {
-  min-height: 44px;
-  padding: 0 16px;
   background: transparent;
-  color: var(--ink);
-  border: 2px solid var(--red);
-  border-radius: 6px;
-  font-weight: 900;
-  white-space: nowrap;
+  color: #4e463f;
+  border: 0;
+  border-radius: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .regret-button:hover {
-  background: rgba(244, 71, 56, 0.12);
+  color: var(--red);
 }
 
 .status-dot {
