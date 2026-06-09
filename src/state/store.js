@@ -39,6 +39,11 @@ export function getPurchasedTickets() {
   return state.purchasedTickets;
 }
 
+export function hasPurchasedTicketForEvent(eventId) {
+  const event = events.find((item) => item.id === eventId);
+  return state.purchasedTickets.some((ticket) => ticket.eventId === eventId || ticket.artist === event?.artist);
+}
+
 export function ticketKey(eventId, ticketId) {
   return `${eventId}:${ticketId}`;
 }

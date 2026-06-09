@@ -4,6 +4,7 @@ import {
   getPurchasedTickets,
   getSelectedEvent,
   getVisibleEvents,
+  hasPurchasedTicketForEvent,
   ticketKey,
 } from "../state/store.js";
 import { formatMoney } from "../utils/formatters.js";
@@ -25,6 +26,7 @@ export function renderEvents() {
 }
 
 function createEventRow(event) {
+  const alreadyPurchased = hasPurchasedTicketForEvent(event.id);
   return `
     <article class="event-row ${event.id === state.selectedEventId ? "selected" : ""}">
       <div class="date-box">
@@ -38,9 +40,10 @@ function createEventRow(event) {
           <span class="availability">${event.stock}% disponible</span>
           <span class="category-tag">${event.category}</span>
           <span class="category-tag">desde ${formatMoney.format(event.from)}</span>
+          ${alreadyPurchased ? '<span class="category-tag owned-tag">Ya tenes ticket</span>' : ""}
         </div>
       </div>
-      <button class="select-event" type="button" data-event="${event.id}">Elegir</button>
+      <button class="select-event" type="button" data-event="${event.id}">${alreadyPurchased ? "Ver estado" : "Elegir"}</button>
     </article>
   `;
 }
@@ -68,6 +71,7 @@ function renderTickets() {
 
 function createTicketRow(event, ticket) {
   const quantity = state.cart[ticketKey(event.id, ticket.id)]?.quantity || 0;
+  const alreadyPurchased = hasPurchasedTicketForEvent(event.id);
   return `
     <article class="ticket-row">
       <div>
@@ -77,13 +81,18 @@ function createTicketRow(event, ticket) {
       <div class="qty-control" aria-label="Cantidad para ${ticket.name}">
         <button type="button" data-ticket="${ticket.id}" data-action="decrease" ${quantity === 0 ? "disabled" : ""}>-</button>
         <span>${quantity}</span>
-        <button type="button" data-ticket="${ticket.id}" data-action="increase" ${!state.queue.ready ? "disabled" : ""}>+</button>
+        <button type="button" data-ticket="${ticket.id}" data-action="increase" ${!state.queue.ready || alreadyPurchased ? "disabled" : ""}>+</button>
       </div>
     </article>
   `;
 }
 
 function renderQueue() {
+  if (hasPurchasedTicketForEvent(state.selectedEventId)) {
+    renderPurchasedQueue();
+    return;
+  }
+
   el.queueProgress.style.width = `${state.queue.progress}%`;
   el.queueStatus.classList.toggle("waiting", state.queue.active && !state.queue.ready);
   el.queueStatus.classList.toggle("ready", state.queue.ready);
@@ -99,6 +108,19 @@ function renderQueue() {
   }
 
   renderIdleQueue();
+}
+
+function renderPurchasedQueue() {
+  el.queueProgress.style.width = "100%";
+  el.queueStatus.classList.remove("waiting");
+  el.queueStatus.classList.add("ready");
+  el.queueStatus.textContent = "Ticket emitido";
+  el.queuePosition.textContent = "--";
+  el.queueTime.textContent = "--";
+  el.queueCopy.textContent = "Ya tenes una entrada comprada para este evento durante esta sesion demo. Para evitar duplicados, no se puede volver a entrar en la cola del mismo show.";
+  el.queueButton.textContent = "Ya tenes ticket";
+  el.queueButton.disabled = true;
+  setActiveStep(4);
 }
 
 function renderReadyQueue() {

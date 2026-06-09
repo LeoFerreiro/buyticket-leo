@@ -1,11 +1,23 @@
 import { events } from "./data/events.js";
-import { initialQueue, state, getCartLines, getSelectedEvent, ticketKey } from "./state/store.js";
+import {
+  initialQueue,
+  state,
+  getCartLines,
+  getSelectedEvent,
+  hasPurchasedTicketForEvent,
+  ticketKey,
+} from "./state/store.js";
 import { el } from "./ui/dom.js";
 import { renderAll, renderEvents, setActiveStep } from "./ui/render.js";
 import { formatMoney, randomBetween } from "./utils/formatters.js";
 
 function startQueue() {
   if (state.queue.active || state.queue.ready) return;
+  if (hasPurchasedTicketForEvent(state.selectedEventId)) {
+    resetQueueOnly();
+    renderAll();
+    return;
+  }
 
   state.queue.active = true;
   state.queue.progress = 4;
@@ -48,6 +60,7 @@ function resetQueueOnly() {
 
 function updateTicket(ticketId, action) {
   if (!state.queue.ready) return;
+  if (hasPurchasedTicketForEvent(state.selectedEventId)) return;
 
   const event = getSelectedEvent();
   const ticket = event.tickets.find((item) => item.id === ticketId);
@@ -74,6 +87,12 @@ function updateTicket(ticketId, action) {
 function checkout() {
   const lines = getCartLines();
   if (!lines.length) return;
+  if (lines.some((line) => hasPurchasedTicketForEvent(line.eventId))) {
+    state.cart = Object.fromEntries(Object.entries(state.cart).filter(([, line]) => !hasPurchasedTicketForEvent(line.eventId)));
+    resetQueueOnly();
+    renderAll();
+    return;
+  }
 
   if (!state.user) {
     openAuthModal();
@@ -101,6 +120,7 @@ function issuePurchasedTickets(lines) {
     const event = events.find((item) => item.id === line.eventId);
     return {
       code: `NV-${randomBetween(10000, 99999)}`,
+      eventId: line.eventId,
       artist: line.artist,
       name: line.name,
       quantity: line.quantity,
