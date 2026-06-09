@@ -48,6 +48,10 @@ function createEventRow(event) {
 function renderFeatured() {
   const event = getSelectedEvent();
   el.featuredBand.textContent = event.artist;
+  el.featuredImage.hidden = !event.imageUrl;
+  el.featuredImage.src = event.imageUrl || "";
+  el.featuredImage.alt = event.imageUrl ? `Imagen destacada de ${event.artist}` : "";
+  el.featuredPosterDate.textContent = `${event.day} ${event.month}`.toUpperCase();
   el.featuredVenue.textContent = event.venue;
   el.featuredTitle.textContent = `${event.artist} / ${event.title}`;
   el.featuredMeta.textContent = `${event.date} / ${event.time} / ${event.city}`;
@@ -160,6 +164,8 @@ function renderAccount() {
 
   el.sessionLabel.textContent = userLabel;
   el.authOpen.classList.toggle("logged", Boolean(state.user));
+  el.authOpen.setAttribute("aria-expanded", "false");
+  el.userMenu.classList.add("hidden");
   el.logoutButton.classList.toggle("hidden", !state.user);
   el.accountAction.textContent = state.user ? "Comprar mas entradas" : "Crear usuario demo";
   el.accountCopy.textContent = state.user
@@ -168,6 +174,8 @@ function renderAccount() {
   el.userPanel.innerHTML = state.user
     ? createUserPanel(ticketQuantity)
     : '<div class="user-panel-empty">Sin usuario demo activo.</div>';
+  el.profilePanel.classList.toggle("hidden", !state.user);
+  el.profilePanel.innerHTML = state.user ? createProfilePanel(ticketQuantity) : "";
 
   el.myTickets.innerHTML = tickets.length
     ? tickets.map(createPurchasedTicket).join("")
@@ -185,6 +193,26 @@ function createUserPanel(ticketQuantity) {
       <strong>${ticketQuantity}</strong>
       <span>tickets</span>
     </div>
+  `;
+}
+
+function createProfilePanel(ticketQuantity) {
+  return `
+    <h2>Perfil demo</h2>
+    <dl>
+      <div>
+        <dt>Nombre</dt>
+        <dd>${state.user.name}</dd>
+      </div>
+      <div>
+        <dt>Email</dt>
+        <dd>${state.user.email}</dd>
+      </div>
+      <div>
+        <dt>Tickets activos</dt>
+        <dd>${ticketQuantity}</dd>
+      </div>
+    </dl>
   `;
 }
 

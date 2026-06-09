@@ -2,10 +2,10 @@ export const events = [
   {
     id: "piojos",
     artist: "Los Piojos",
-    title: "Ritual de verano",
-    venue: "Estadio Unico de La Plata",
+    title: "Ritual de invierno",
+    venue: "Estadio Unico de La Plata Diego Armando Maradona",
     city: "La Plata",
-    date: "Sab 18 Jul",
+    date: "18 de Julio",
     time: "21:00",
     day: "18",
     month: "Jul",
@@ -13,6 +13,7 @@ export const events = [
     demand: "Alta",
     stock: 23,
     from: 42000,
+    imageUrl: "https://a.ltrbxd.com/resized/film-poster/1/2/8/9/5/1/2/1289512-los-piojos-estadio-unico-de-la-plata-0-230-0-345-crop.jpg?v=6a8ad92c04",
     tickets: [
       { id: "campo", name: "Campo", price: 42000, note: "Ingreso general de pie" },
       { id: "platea", name: "Platea lateral", price: 56000, note: "Ubicacion numerada demo" },

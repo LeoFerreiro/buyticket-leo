@@ -15,7 +15,7 @@
   <body>
     <div class="app-shell">
       <header class="topbar">
-        <a class="brand" href="#" aria-label="Inicio NocheViva">
+        <a class="brand" id="brand-home" href="#" aria-label="Inicio NocheViva">
           <span class="brand-mark">NV</span>
           <span>NocheViva</span>
         </a>
@@ -26,9 +26,16 @@
           <a href="#checkout" data-route="home">Checkout demo</a>
         </nav>
         <div class="topbar-actions">
-          <button class="session-chip" id="auth-open" type="button">
-            <span id="session-label">Registrarse</span>
-          </button>
+          <div class="user-menu-shell">
+            <button class="session-chip" id="auth-open" type="button" aria-expanded="false" aria-controls="user-menu">
+              <span id="session-label">Registrarse</span>
+            </button>
+            <div class="user-menu hidden" id="user-menu">
+              <button type="button" id="menu-tickets">Mis Tickets</button>
+              <button type="button" id="menu-profile">Perfil</button>
+              <button type="button" id="menu-logout">Cerrar sesion</button>
+            </div>
+          </div>
           <button class="icon-button" id="reset-demo" type="button" aria-label="Reiniciar demo" title="Reiniciar demo">
             R
           </button>
@@ -57,14 +64,16 @@
 
             <article class="featured-show" id="featured-card" aria-label="Show destacado">
               <div class="poster">
+                <img id="featured-image" alt="" />
                 <span class="poster-kicker">Fecha destacada</span>
+                <span class="poster-date" id="featured-poster-date">18 JULIO</span>
                 <strong id="featured-band">Los Piojos</strong>
-                <span id="featured-venue">Estadio Unico de La Plata</span>
+                <span id="featured-venue">Estadio Unico de La Plata Diego Armando Maradona</span>
               </div>
               <div class="featured-info">
                 <span class="live-badge">Venta fuerte</span>
-                <h2 id="featured-title">Los Piojos / Ritual de verano</h2>
-                <p id="featured-meta">Sab 18 Jul / 21:00 / La Plata</p>
+                <h2 id="featured-title">Los Piojos / Ritual de invierno</h2>
+                <p id="featured-meta">18 de Julio / 21:00 / La Plata</p>
                 <div class="mini-stats">
                   <span><strong id="featured-price">$42.000</strong> desde</span>
                   <span><strong id="featured-stock">23%</strong> disponible</span>
@@ -185,6 +194,7 @@
             <p id="account-copy">
               Registrate para completar el checkout y ver tus entradas emitidas durante esta sesion.
             </p>
+            <div class="profile-panel hidden" id="profile-panel"></div>
             <div class="account-actions">
               <button class="secondary-dark-button" id="account-action" type="button">Crear usuario demo</button>
               <button class="link-button hidden" id="logout-button" type="button">Salir</button>
@@ -213,7 +223,7 @@
 
     <dialog class="checkout-modal" id="auth-modal">
       <form id="auth-form" method="dialog" novalidate>
-        <button class="modal-close" type="submit" value="cancel" aria-label="Cerrar">x</button>
+        <button class="modal-close" id="auth-close" type="button" aria-label="Cerrar">x</button>
         <p class="eyebrow">Registro demo</p>
         <h2>Crear usuario de prueba</h2>
         <p>

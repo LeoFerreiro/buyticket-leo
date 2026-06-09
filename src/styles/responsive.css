@@ -22,6 +22,20 @@
     flex-wrap: wrap;
   }
 
+  .user-menu-shell {
+    flex: 1 1 170px;
+  }
+
+  .session-chip {
+    width: 100%;
+  }
+
+  .user-menu {
+    left: 0;
+    right: auto;
+    width: min(260px, 90vw);
+  }
+
   .main-nav {
     width: 100%;
     overflow-x: auto;
@@ -42,6 +56,15 @@
 
   .user-ticket-count {
     grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .profile-panel div {
+    display: grid;
+    gap: 4px;
+  }
+
+  .profile-panel dd {
     text-align: left;
   }
 

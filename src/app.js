@@ -137,6 +137,12 @@ function openAuthModal() {
   window.setTimeout(() => el.authName.focus(), 0);
 }
 
+function closeAuthModal() {
+  el.authForm.reset();
+  clearAuthError();
+  el.authModal.close();
+}
+
 function registerUser(event) {
   event.preventDefault();
   const name = el.authName.value.trim();
@@ -160,7 +166,9 @@ function registerUser(event) {
 function logoutUser() {
   state.user = null;
   state.purchasedTickets = [];
+  closeUserMenu();
   renderAll();
+  showPage("home");
 }
 
 function validateCredentials({ name, email, password }) {
@@ -218,6 +226,29 @@ function showHomeAndScroll(targetSelector) {
   }, 0);
 }
 
+function toggleUserMenu() {
+  if (!state.user) {
+    openAuthModal();
+    return;
+  }
+
+  const isHidden = el.userMenu.classList.toggle("hidden");
+  el.authOpen.setAttribute("aria-expanded", String(!isHidden));
+}
+
+function closeUserMenu() {
+  el.userMenu.classList.add("hidden");
+  el.authOpen.setAttribute("aria-expanded", "false");
+}
+
+function showProfilePanel() {
+  showPage("tickets");
+  closeUserMenu();
+  window.setTimeout(() => {
+    el.profilePanel.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 0);
+}
+
 function bindEvents() {
   el.eventList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-event]");
@@ -249,13 +280,13 @@ function bindEvents() {
   });
   el.exploreEvents.addEventListener("click", () => showHomeAndScroll("#eventos"));
   el.cartJump.addEventListener("click", () => showHomeAndScroll("#cart-panel"));
-  el.authOpen.addEventListener("click", () => {
-    if (state.user) {
-      showPage("tickets");
-      return;
-    }
-    openAuthModal();
+  el.brandHome.addEventListener("click", (event) => {
+    event.preventDefault();
+    closeUserMenu();
+    showPage("home");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
+  el.authOpen.addEventListener("click", toggleUserMenu);
   el.accountAction.addEventListener("click", () => {
     if (state.user) {
       showHomeAndScroll("#eventos");
@@ -263,8 +294,20 @@ function bindEvents() {
     }
     openAuthModal();
   });
+  el.menuTickets.addEventListener("click", () => {
+    closeUserMenu();
+    showPage("tickets");
+  });
+  el.menuProfile.addEventListener("click", showProfilePanel);
+  el.menuLogout.addEventListener("click", logoutUser);
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".user-menu-shell")) {
+      closeUserMenu();
+    }
+  });
   el.routeLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
+      closeUserMenu();
       const route = link.dataset.route;
       if (route === "tickets") {
         event.preventDefault();
@@ -278,6 +321,7 @@ function bindEvents() {
   el.authEmail.addEventListener("input", clearAuthError);
   el.authName.addEventListener("input", clearAuthError);
   el.authPassword.addEventListener("input", clearAuthError);
+  el.authClose.addEventListener("click", closeAuthModal);
   el.authForm.addEventListener("submit", registerUser);
   el.logoutButton.addEventListener("click", logoutUser);
   el.checkoutButton.addEventListener("click", checkout);
