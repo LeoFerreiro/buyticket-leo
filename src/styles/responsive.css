@@ -36,6 +36,15 @@
     grid-template-columns: 1fr;
   }
 
+  .user-panel {
+    grid-template-columns: 48px minmax(0, 1fr);
+  }
+
+  .user-ticket-count {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
   .account-actions {
     width: 100%;
     justify-items: stretch;

@@ -333,6 +333,66 @@ h1 {
   line-height: 1.45;
 }
 
+.user-panel {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  min-height: 76px;
+  margin: 0 0 18px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--dark-line);
+}
+
+.user-avatar {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  font-family: Archivo, Inter, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.user-panel strong,
+.user-panel span {
+  display: block;
+}
+
+.user-panel strong {
+  font-family: Archivo, Inter, sans-serif;
+  font-size: 20px;
+}
+
+.user-panel span {
+  color: #655c52;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.user-ticket-count {
+  min-width: 74px;
+  padding: 8px;
+  background: var(--lime);
+  color: var(--ink);
+  text-align: center;
+}
+
+.user-ticket-count strong {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.user-panel-empty {
+  grid-column: 1 / -1;
+  color: #655c52;
+  font-weight: 800;
+}
+
 .account-actions {
   display: grid;
   justify-items: end;

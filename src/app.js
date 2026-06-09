@@ -249,10 +249,16 @@ function bindEvents() {
   });
   el.exploreEvents.addEventListener("click", () => showHomeAndScroll("#eventos"));
   el.cartJump.addEventListener("click", () => showHomeAndScroll("#cart-panel"));
-  el.authOpen.addEventListener("click", openAuthModal);
-  el.accountAction.addEventListener("click", () => {
+  el.authOpen.addEventListener("click", () => {
     if (state.user) {
       showPage("tickets");
+      return;
+    }
+    openAuthModal();
+  });
+  el.accountAction.addEventListener("click", () => {
+    if (state.user) {
+      showHomeAndScroll("#eventos");
       return;
     }
     openAuthModal();

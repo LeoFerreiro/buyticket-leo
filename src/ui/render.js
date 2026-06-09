@@ -156,18 +156,36 @@ export function setActiveStep(stepNumber) {
 function renderAccount() {
   const tickets = getPurchasedTickets();
   const userLabel = state.user ? state.user.name : "Registrarse";
+  const ticketQuantity = tickets.reduce((total, ticket) => total + ticket.quantity, 0);
 
   el.sessionLabel.textContent = userLabel;
   el.authOpen.classList.toggle("logged", Boolean(state.user));
   el.logoutButton.classList.toggle("hidden", !state.user);
-  el.accountAction.textContent = state.user ? "Ver mis tickets" : "Crear usuario demo";
+  el.accountAction.textContent = state.user ? "Comprar mas entradas" : "Crear usuario demo";
   el.accountCopy.textContent = state.user
     ? `${state.user.name}, tus tickets emitidos aparecen aca hasta que cierres, recargues o reinicies la demo.`
     : "Registrate para completar el checkout y ver tus entradas emitidas durante esta sesion.";
+  el.userPanel.innerHTML = state.user
+    ? createUserPanel(ticketQuantity)
+    : '<div class="user-panel-empty">Sin usuario demo activo.</div>';
 
   el.myTickets.innerHTML = tickets.length
     ? tickets.map(createPurchasedTicket).join("")
     : '<p class="empty-state">Todavia no tenes tickets comprados en esta sesion.</p>';
+}
+
+function createUserPanel(ticketQuantity) {
+  return `
+    <div class="user-avatar">${state.user.name.charAt(0).toUpperCase()}</div>
+    <div>
+      <strong>${state.user.name}</strong>
+      <span>${state.user.email}</span>
+    </div>
+    <div class="user-ticket-count">
+      <strong>${ticketQuantity}</strong>
+      <span>tickets</span>
+    </div>
+  `;
 }
 
 function createPurchasedTicket(ticket) {

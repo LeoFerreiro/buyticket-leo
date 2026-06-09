@@ -39,6 +39,7 @@ export const el = {
   accountCopy: document.querySelector("#account-copy"),
   accountAction: document.querySelector("#account-action"),
   logoutButton: document.querySelector("#logout-button"),
+  userPanel: document.querySelector("#user-panel"),
   myTickets: document.querySelector("#my-tickets"),
   startFeatured: document.querySelector("#start-featured"),
   exploreEvents: document.querySelector("#explore-events"),
