@@ -160,7 +160,8 @@ function registerUser(event) {
   clearAuthError();
   el.authModal.close();
   renderAll();
-  showPage("tickets");
+  showPage("home");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function logoutUser() {
@@ -249,6 +250,22 @@ function showProfilePanel() {
   }, 0);
 }
 
+function openRegretModal() {
+  const hasTickets = state.purchasedTickets.length > 0;
+  el.regretCopy.textContent = hasTickets
+    ? "Esta accion simula la anulacion de los tickets comprados durante esta sesion. No se envia informacion a ningun servidor."
+    : "Todavia no hay tickets comprados en esta sesion para anular.";
+  el.confirmRegret.disabled = !hasTickets;
+  el.regretModal.showModal();
+}
+
+function confirmRegret() {
+  state.purchasedTickets = [];
+  renderAll();
+  el.regretCopy.textContent = "Listo: los tickets de esta sesion fueron anulados en la demo.";
+  el.confirmRegret.disabled = true;
+}
+
 function bindEvents() {
   el.eventList.addEventListener("click", (event) => {
     const button = event.target.closest("[data-event]");
@@ -325,6 +342,8 @@ function bindEvents() {
   el.authForm.addEventListener("submit", registerUser);
   el.logoutButton.addEventListener("click", logoutUser);
   el.checkoutButton.addEventListener("click", checkout);
+  el.regretButton.addEventListener("click", openRegretModal);
+  el.confirmRegret.addEventListener("click", confirmRegret);
   el.clearCart.addEventListener("click", clearCart);
   el.resetDemo.addEventListener("click", resetDemo);
   el.finishDemo.addEventListener("click", clearCart);

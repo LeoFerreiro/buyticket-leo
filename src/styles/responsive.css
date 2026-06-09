@@ -73,6 +73,15 @@
     justify-items: stretch;
   }
 
+  .regret-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .regret-button {
+    width: 100%;
+  }
+
   .event-row {
     grid-template-columns: 70px minmax(0, 1fr);
   }

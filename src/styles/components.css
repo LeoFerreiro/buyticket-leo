@@ -799,6 +799,43 @@ h1 {
   padding: 18px;
 }
 
+.regret-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--dark-line);
+}
+
+.regret-panel h2 {
+  margin-bottom: 8px;
+}
+
+.regret-panel p:not(.eyebrow) {
+  margin: 0;
+  color: #655c52;
+  line-height: 1.45;
+}
+
+.regret-button {
+  min-height: 44px;
+  padding: 0 16px;
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--red);
+  border-radius: 6px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.regret-button:hover {
+  background: rgba(244, 71, 56, 0.12);
+}
+
 .status-dot {
   padding: 6px 9px;
   background: rgba(199, 244, 100, 0.4);
@@ -946,6 +983,11 @@ h1 {
 }
 
 .checkout-button:disabled {
+  cursor: not-allowed;
+  background: #c9bfaa;
+}
+
+.primary-button:disabled {
   cursor: not-allowed;
   background: #c9bfaa;
 }

@@ -184,6 +184,17 @@
               </section>
             </aside>
           </section>
+
+          <section class="regret-panel" aria-labelledby="regret-title">
+            <div>
+              <p class="eyebrow">Defensa del consumidor</p>
+              <h2 id="regret-title">Arrepentimiento de compra</h2>
+              <p>
+                En esta demo podes simular la anulacion de una compra emitida durante la sesion actual.
+              </p>
+            </div>
+            <button class="regret-button" id="regret-button" type="button">Boton de arrepentimiento</button>
+          </section>
         </section>
 
         <section class="page-view tickets-page" id="mis-tickets" data-page="tickets" aria-labelledby="account-title">
@@ -252,6 +263,18 @@
         <p class="form-hint">Debe tener entre 8 y 15 caracteres y combinar al menos 3 tipos: minusculas, mayusculas, numeros o simbolos.</p>
         <p class="form-error" id="auth-error" aria-live="polite"></p>
         <button class="primary-button full" type="submit">Entrar a mi cuenta demo</button>
+      </form>
+    </dialog>
+
+    <dialog class="checkout-modal" id="regret-modal">
+      <form method="dialog">
+        <button class="modal-close" type="submit" value="cancel" aria-label="Cerrar">x</button>
+        <p class="eyebrow">Arrepentimiento de compra</p>
+        <h2>Solicitud demo</h2>
+        <p id="regret-copy">
+          Esta accion simula la anulacion de los tickets comprados durante esta sesion. No se envia informacion a ningun servidor.
+        </p>
+        <button class="primary-button full" id="confirm-regret" type="button">Anular tickets de la sesion</button>
       </form>
     </dialog>
 
