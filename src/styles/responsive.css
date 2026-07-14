@@ -1,6 +1,6 @@
 @media (max-width: 1120px) {
   .hero,
-  .tickets-page,
+  .tickets-page.active,
   .content-grid {
     grid-template-columns: 1fr;
   }
@@ -8,6 +8,10 @@
   .filters,
   .tickets-hero {
     position: static;
+  }
+
+  .my-tickets {
+    min-width: 0;
   }
 }
 
@@ -48,15 +52,42 @@
 
   .owned-ticket {
     grid-template-columns: 1fr;
+    align-items: start;
   }
 
   .user-panel {
     grid-template-columns: 48px minmax(0, 1fr);
   }
 
+  .tickets-hero h1 {
+    font-size: clamp(38px, 12vw, 48px);
+    line-height: 1;
+  }
+
+  .user-panel,
+  .owned-ticket,
+  .owned-ticket > div {
+    min-width: 0;
+  }
+
+  .user-panel strong,
+  .user-panel span,
+  .owned-ticket strong,
+  .owned-ticket p {
+    overflow-wrap: anywhere;
+  }
+
+  .owned-ticket strong {
+    line-height: 1.08;
+  }
+
   .user-ticket-count {
     grid-column: 1 / -1;
     text-align: left;
+  }
+
+  .ticket-qty {
+    justify-self: start;
   }
 
   .profile-panel div {
